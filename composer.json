@@ -1,0 +1,22 @@
+{
+	"name": "uestla/aliaser",
+	"type": "library",
+	"description": "Simple PHP library for parsing and handling class aliases defined by USE statements.",
+	"keywords": ["php", "namespace"],
+	"homepage": "https://github.com/uestla/Aliaser",
+	"license": "MIT",
+	"support": {
+		"issues": "https://github.com/uestla/Aliaser/issues"
+	},
+	"require": {
+		"php": ">=5.3.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "*"
+	},
+	"autoload": {
+		"psr-0": {
+			"Aliaser": "src/"
+		}
+	}
+}

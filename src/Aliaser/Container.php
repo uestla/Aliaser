@@ -47,8 +47,12 @@ class Container
 	 */
 	function getClass($alias, \ReflectionClass $context)
 	{
-		if (!strlen($alias) || substr($alias, 0, 1) === '\\') {
+		if (!strlen($alias)) {
 			return $alias;
+		}
+
+		if (substr($alias, 0, 1) === '\\') {
+			return substr($alias, 1);
 		}
 
 		$file = $context->getFileName();

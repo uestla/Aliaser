@@ -60,4 +60,20 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('Foo\OtherClasses', $aliaser->getClass('OtherClasses', $fooFooRef));
 	}
 
+
+
+	function testTypes()
+	{
+		$aliaser = SL::aliaser();
+		$ref = new ReflectionClass('Model\Entities\TypesEntity');
+
+		$this->assertEquals('object', $aliaser->getClass('\object', $ref));
+		$this->assertEquals('resource', $aliaser->getClass('\resource', $ref));
+		$this->assertEquals('mixed', $aliaser->getClass('\mixed', $ref));
+		$this->assertEquals('number', $aliaser->getClass('\number', $ref));
+		$this->assertEquals('callback', $aliaser->getClass('\callback', $ref));
+		$this->assertEquals('callable', $aliaser->getClass('\callable', $ref));
+		$this->assertEquals('void', $aliaser->getClass('\void', $ref));
+	}
+
 }

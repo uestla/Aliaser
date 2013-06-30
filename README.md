@@ -31,16 +31,13 @@ And now let's say we would like to take those annotations and get the full class
 $aliaser = new Aliaser\Container;
 $reflection = new ReflectionClass('Model\Entities\Book');
 
-$file = $reflection->getFileName();
-$namespace = $reflection->getNamespaceName();
-
-$aliaser->getClass('User', $file, $namespace); // 'Model\Entities\User'
-$aliaser->getClass('DateTime', $file, $namespace); // 'DateTime'
+$aliaser->getClass('User', $reflection); // 'Model\Entities\User'
+$aliaser->getClass('DateTime', $reflection); // 'DateTime'
 ```
 
 It handles multiple namespace definitions in a single file as well.
 
-However, the parsing can be quite expensive, so we can use a [Nette Framework](http://nette.org) Cache:
+However, parsing can be quite expensive - we can use a [Nette Framework](http://nette.org) Cache:
 
 ```php
 $storage = new Nette\Caching\Storages\FileStorage(__DIR__ . '/temp');

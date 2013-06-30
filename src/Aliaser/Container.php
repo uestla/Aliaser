@@ -13,7 +13,6 @@ namespace Aliaser;
 
 use Nette\Caching\Cache as NCache;
 use Nette\Caching\IStorage as NIStorage;
-use Nette\Caching\Storages\DevNullStorage as NDevNullStorage;
 
 
 class Container
@@ -43,48 +42,46 @@ class Container
 
 	/**
 	 * @param  string $alias
-	 * @param  string $file
-	 * @param  string $namespace
+	 * @param  \ReflectionClass $context
 	 * @return string
 	 */
-	function getClass($alias, $file, $namespace = '')
+	function getClass($alias, \ReflectionClass $context)
 	{
 		if (!strlen($alias) || substr($alias, 0, 1) === '\\') {
 			return $alias;
 		}
 
-		$path = realpath($file);
-		if ($path === FALSE) {
-			throw new Exception\FileNotFoundException;
-		}
+		$file = $context->getFileName();
 
-		if (!isset($this->map[$path])) {
+		if (!isset($this->map[$file])) {
 			if ($this->cache === NULL) {
-				$list = Parser::parse($path);
+				$list = Parser::parse($file);
 
 			} else {
-				$key = self::C_FILE . $path;
+				$key = self::C_FILE . $file;
 				$list = $this->cache->load($key);
 
 				if ($list === NULL) {
-					$list = $this->cache->save($key, Parser::parse($path), array(
-						NCache::FILES => array($path),
+					$list = $this->cache->save($key, Parser::parse($file), array(
+						NCache::FILES => array($file),
 					));
 				}
 			}
 
-			$this->map[$path] = $list;
+			$this->map[$file] = $list;
 		}
 
-		if (!isset($this->map[$path][$namespace])) {
+		$namespace = $context->getNamespaceName();
+
+		if (!isset($this->map[$file][$namespace])) {
 			throw new Exception\NamespaceNotFoundException;
 		}
 
-		if (!isset($this->map[$path][$namespace][$alias])) {
+		if (!isset($this->map[$file][$namespace][$alias])) {
 			return ltrim(trim($namespace, '\\') . '\\', '\\') . $alias;
 		}
 
-		return $this->map[$path][$namespace][$alias];
+		return $this->map[$file][$namespace][$alias];
 	}
 
 }

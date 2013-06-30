@@ -7,15 +7,15 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 	function testSimple()
 	{
 		$aliaser = SL::aliaser();
-		$file = __DIR__ . '/definitions/simple.php';
+		$ref = new ReflectionClass('X');
 
-		$this->assertEquals('A\B\C', $aliaser->getClass('C', $file));
-		$this->assertEquals('D', $aliaser->getClass('E', $file));
-		$this->assertEquals('F\Z', $aliaser->getClass('Z', $file));
-		$this->assertEquals('G\H', $aliaser->getClass('H', $file));
-		$this->assertEquals('I\J\K', $aliaser->getClass('L', $file));
-		$this->assertEquals('X', $aliaser->getClass('X', $file));
-		$this->assertEquals('OtherClasses', $aliaser->getClass('OtherClasses', $file));
+		$this->assertEquals('A\B\C', $aliaser->getClass('C', $ref));
+		$this->assertEquals('D', $aliaser->getClass('E', $ref));
+		$this->assertEquals('F\Z', $aliaser->getClass('Z', $ref));
+		$this->assertEquals('G\H', $aliaser->getClass('H', $ref));
+		$this->assertEquals('I\J\K', $aliaser->getClass('L', $ref));
+		$this->assertEquals('X', $aliaser->getClass('X', $ref));
+		$this->assertEquals('OtherClasses', $aliaser->getClass('OtherClasses', $ref));
 	}
 
 
@@ -23,15 +23,15 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 	function testSingleSpace()
 	{
 		$aliaser = SL::aliaser();
-		$file = __DIR__ . '/definitions/singlespace.php';
+		$ref = new ReflectionClass('Foo\Bar');
 
-		$this->assertEquals('A\B\C', $aliaser->getClass('C', $file, 'Foo'));
-		$this->assertEquals('D', $aliaser->getClass('E', $file, 'Foo'));
-		$this->assertEquals('F', $aliaser->getClass('F', $file, 'Foo'));
-		$this->assertEquals('G\H', $aliaser->getClass('H', $file, 'Foo'));
-		$this->assertEquals('I\J\K', $aliaser->getClass('L', $file, 'Foo'));
-		$this->assertEquals('Foo\Bar', $aliaser->getClass('Bar', $file, 'Foo'));
-		$this->assertEquals('Foo\OtherClasses', $aliaser->getClass('OtherClasses', $file, 'Foo'));
+		$this->assertEquals('A\B\C', $aliaser->getClass('C', $ref));
+		$this->assertEquals('D', $aliaser->getClass('E', $ref));
+		$this->assertEquals('F', $aliaser->getClass('F', $ref));
+		$this->assertEquals('G\H', $aliaser->getClass('H', $ref));
+		$this->assertEquals('I\J\K', $aliaser->getClass('L', $ref));
+		$this->assertEquals('Foo\Bar', $aliaser->getClass('Bar', $ref));
+		$this->assertEquals('Foo\OtherClasses', $aliaser->getClass('OtherClasses', $ref));
 	}
 
 
@@ -39,41 +39,25 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 	function testMultiSpace()
 	{
 		$aliaser = SL::aliaser();
-		$file = __DIR__ . '/definitions/multispace.php';
+		$fooRef = new ReflectionClass('Foo');
 
-		$this->assertEquals('A\B\C', $aliaser->getClass('C', $file));
-		$this->assertEquals('D', $aliaser->getClass('E', $file));
-		$this->assertEquals('F\Z', $aliaser->getClass('Z', $file));
-		$this->assertEquals('G\H', $aliaser->getClass('H', $file));
-		$this->assertEquals('I\J\K', $aliaser->getClass('L', $file));
-		$this->assertEquals('Foo', $aliaser->getClass('Foo', $file));
-		$this->assertEquals('OtherClasses', $aliaser->getClass('OtherClasses', $file));
+		$this->assertEquals('A\B\C', $aliaser->getClass('C', $fooRef));
+		$this->assertEquals('D', $aliaser->getClass('E', $fooRef));
+		$this->assertEquals('F\Z', $aliaser->getClass('Z', $fooRef));
+		$this->assertEquals('G\H', $aliaser->getClass('H', $fooRef));
+		$this->assertEquals('I\J\K', $aliaser->getClass('L', $fooRef));
+		$this->assertEquals('Foo', $aliaser->getClass('Foo', $fooRef));
+		$this->assertEquals('OtherClasses', $aliaser->getClass('OtherClasses', $fooRef));
 
-		$this->assertEquals('A\B\C', $aliaser->getClass('C', $file, 'Foo'));
-		$this->assertEquals('D', $aliaser->getClass('E', $file, 'Foo'));
-		$this->assertEquals('F', $aliaser->getClass('F', $file, 'Foo'));
-		$this->assertEquals('G\H', $aliaser->getClass('H', $file, 'Foo'));
-		$this->assertEquals('I\J\K', $aliaser->getClass('L', $file, 'Foo'));
-		$this->assertEquals('Foo\Foo', $aliaser->getClass('Foo', $file, 'Foo'));
-		$this->assertEquals('Foo\OtherClasses', $aliaser->getClass('OtherClasses', $file, 'Foo'));
-	}
+		$fooFooRef = new ReflectionClass('Foo\Foo');
 
-
-
-	function testReflection()
-	{
-		$aliaser = SL::aliaser();
-		$ref = new ReflectionClass('Foo\Foo');
-
-		$file = $ref->getFileName();
-		$namespace = $ref->getNamespaceName();
-
-		$this->assertEquals('A\B\C', $aliaser->getClass('C', $file, $namespace));
-		$this->assertEquals('D', $aliaser->getClass('E', $file, $namespace));
-		$this->assertEquals('F', $aliaser->getClass('F', $file, $namespace));
-		$this->assertEquals('G\H', $aliaser->getClass('H', $file, $namespace));
-		$this->assertEquals('I\J\K', $aliaser->getClass('L', $file, $namespace));
-		$this->assertEquals('Foo\OtherClasses', $aliaser->getClass('OtherClasses', $file, $namespace));
+		$this->assertEquals('A\B\C', $aliaser->getClass('C', $fooFooRef));
+		$this->assertEquals('D', $aliaser->getClass('E', $fooFooRef));
+		$this->assertEquals('F', $aliaser->getClass('F', $fooFooRef));
+		$this->assertEquals('G\H', $aliaser->getClass('H', $fooFooRef));
+		$this->assertEquals('I\J\K', $aliaser->getClass('L', $fooFooRef));
+		$this->assertEquals('Foo\Foo', $aliaser->getClass('Foo', $fooFooRef));
+		$this->assertEquals('Foo\OtherClasses', $aliaser->getClass('OtherClasses', $fooFooRef));
 	}
 
 }

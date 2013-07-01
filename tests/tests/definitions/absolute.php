@@ -16,7 +16,6 @@ namespace Model\Entities
 	 * @property \mixed $mixed
 	 * @property \number $number
 	 * @property \callback $callback
-	 * @property \callable $callable
 	 * @property \void $void
 	 */
 	class TypesEntity
@@ -34,7 +33,6 @@ namespace
 	class mixed {}
 	class number {}
 	class callback {}
-	class callable {}
 	class void {}
 
 }

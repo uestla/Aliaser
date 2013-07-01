@@ -36,6 +36,7 @@ class Parser
 
 		$state = NULL;
 		$as = $use = $namespace = '';
+		$mayComeUse = TRUE;
 
 		foreach (@token_get_all($source) as $token) { // intentionally @
 			if (is_array($token)) {
@@ -51,12 +52,19 @@ class Parser
 						continue 2;
 
 					case T_USE:
-						$as = $use = '';
-						$state = self::S_IN_USE;
+						if ($mayComeUse) {
+							$as = $use = '';
+							$state = self::S_IN_USE;
+						}
+
 						continue 2;
 
 					case T_AS:
 						$state === self::S_IN_USE && ($state = self::S_IN_USE_AS);
+						continue 2;
+
+					case T_CLASS:
+						$mayComeUse = FALSE;
 						continue 2;
 
 					case T_STRING:
@@ -82,6 +90,7 @@ class Parser
 			switch ($state) {
 				case self::S_IN_NAMESPACE:
 					$aliases[$namespace] = array();
+					$mayComeUse = TRUE;
 					break;
 
 				case self::S_IN_USE:

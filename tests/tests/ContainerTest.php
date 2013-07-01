@@ -72,8 +72,23 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('mixed', $aliaser->getClass('\mixed', $ref));
 		$this->assertEquals('number', $aliaser->getClass('\number', $ref));
 		$this->assertEquals('callback', $aliaser->getClass('\callback', $ref));
-		$this->assertEquals('callable', $aliaser->getClass('\callable', $ref));
 		$this->assertEquals('void', $aliaser->getClass('\void', $ref));
+	}
+
+
+
+	function testTraits()
+	{
+		$aliaser = SL::aliaser();
+		$ref = new ReflectionClass('Wee');
+
+		$this->assertEquals('A\B\C', $aliaser->getClass('C', $ref));
+		$this->assertEquals('D', $aliaser->getClass('E', $ref));
+		$this->assertEquals('F\Z', $aliaser->getClass('Z', $ref));
+		$this->assertEquals('G\H', $aliaser->getClass('H', $ref));
+		$this->assertEquals('I\J\K', $aliaser->getClass('L', $ref));
+		$this->assertEquals('Wee', $aliaser->getClass('Wee', $ref));
+		$this->assertEquals('OtherClasses', $aliaser->getClass('OtherClasses', $ref));
 	}
 
 }

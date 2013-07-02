@@ -19,16 +19,6 @@ class SL
 
 
 
-	/** @return Aliaser\Container */
-	static function aliaser()
-	{
-		return self::get('aliaser', function () {
-			return new Aliaser\Container(SL::cacheStorage());
-		});
-	}
-
-
-
 	/**
 	 * @param  string $key
 	 * @param  Closure $factory

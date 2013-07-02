@@ -18,24 +18,20 @@ use Nette\Caching\IStorage as NIStorage;
 class Container
 {
 
-	/** @var Parser */
-	private $parser;
-
 	/** @var array */
-	private $map;
+	private static $map = array();
 
 	/** @var NCache */
-	private $cache = NULL;
+	private static $cache = NULL;
 
 	const C_FILE = 'file-';
 
 
 
-	/** @param  NIStorage */
-	function __construct(NIStorage $storage = NULL)
+	/** @throws Exception\StaticClassException */
+	function __construct()
 	{
-		$this->parser = new Parser;
-		$storage !== NULL && ($this->cache = new NCache($storage, __CLASS__));
+		throw new Exception\StaticClassException;
 	}
 
 
@@ -45,7 +41,7 @@ class Container
 	 * @param  \ReflectionClass $context
 	 * @return string
 	 */
-	function getClass($alias, \ReflectionClass $context)
+	static function getClass($alias, \ReflectionClass $context)
 	{
 		if (!strlen($alias)) {
 			return $alias;
@@ -57,35 +53,54 @@ class Container
 
 		$file = $context->getFileName();
 
-		if (!isset($this->map[$file])) {
-			if ($this->cache === NULL) {
+		if (!isset(self::$map[$file])) {
+			if (self::$cache === NULL) {
 				$list = Parser::parse($file);
 
 			} else {
 				$key = self::C_FILE . $file;
-				$list = $this->cache->load($key);
+				$list = self::$cache->load($key);
 
 				if ($list === NULL) {
-					$list = $this->cache->save($key, Parser::parse($file), array(
+					$list = self::$cache->save($key, Parser::parse($file), array(
 						NCache::FILES => array($file),
 					));
 				}
 			}
 
-			$this->map[$file] = $list;
+			self::$map[$file] = $list;
 		}
 
 		$namespace = $context->getNamespaceName();
 
-		if (!isset($this->map[$file][$namespace])) {
+		if (!isset(self::$map[$file][$namespace])) {
 			throw new Exception\NamespaceNotFoundException;
 		}
 
-		if (!isset($this->map[$file][$namespace][$alias])) {
+		if (!isset(self::$map[$file][$namespace][$alias])) {
 			return ltrim(trim($namespace, '\\') . '\\', '\\') . $alias;
 		}
 
-		return $this->map[$file][$namespace][$alias];
+		return self::$map[$file][$namespace][$alias];
+	}
+
+
+
+	/**
+	 * @param  NIStorage $storage
+	 * @return void
+	 */
+	static function setCacheStorage(NIStorage $storage)
+	{
+		self::$cache = new NCache($storage, __CLASS__);
+	}
+
+
+
+	/** @return NIStorage */
+	static function getCacheStorage()
+	{
+		return self::$cache->getStorage();
 	}
 
 }

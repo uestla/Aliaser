@@ -16,4 +16,4 @@ $loader->setCacheStorage(SL::cacheStorage());
 $loader->addDirectory(__DIR__ . '/../');
 $loader->register();
 
-function id($a) { return $a; }
+Aliaser\Container::setCacheStorage(SL::cacheStorage());

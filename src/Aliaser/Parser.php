@@ -21,6 +21,14 @@ class Parser
 
 
 
+	/** @throws Exception\StaticClassException */
+	final function __construct()
+	{
+		throw new Exception\StaticClassException;
+	}
+
+
+
 	/**
 	 * @param  string $file
 	 * @return array

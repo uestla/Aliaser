@@ -29,7 +29,7 @@ class Container
 
 
 	/** @throws Exception\StaticClassException */
-	function __construct()
+	final function __construct()
 	{
 		throw new Exception\StaticClassException;
 	}

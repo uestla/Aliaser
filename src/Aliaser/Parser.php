@@ -119,6 +119,10 @@ class Parser
 			$state = NULL;
 		}
 
+		if (!count($aliases)) {
+			$aliases[''] = array();
+		}
+
 		return $aliases;
 	}
 

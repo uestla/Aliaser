@@ -27,3 +27,10 @@ class X
 	}
 
 }
+
+
+
+$foo = 'bar';
+$lambda = function () use ($foo) {
+	return $foo . strrev($foo);
+};

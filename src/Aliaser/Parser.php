@@ -72,6 +72,7 @@ class Parser
 						continue 2;
 
 					case T_CLASS:
+					case T_FUNCTION:
 						$mayComeUse = FALSE;
 						continue 2;
 

@@ -74,7 +74,7 @@ class Container
 		$namespace = $context->getNamespaceName();
 
 		if (!isset(self::$map[$file][$namespace])) {
-			throw new Exception\NamespaceNotFoundException;
+			throw new Exception\NamespaceNotFoundException("Namespace '$namespace' not found in '$file'.");
 		}
 
 		if (!isset(self::$map[$file][$namespace][$alias])) {

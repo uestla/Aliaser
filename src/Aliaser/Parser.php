@@ -39,7 +39,7 @@ class Parser
 		$source = file_get_contents($file);
 
 		if ($source === FALSE) {
-			throw new Exception\FileNotReadableException;
+			throw new Exception\FileNotReadableException("Cannot read file '$file'.");
 		}
 
 		$state = NULL;

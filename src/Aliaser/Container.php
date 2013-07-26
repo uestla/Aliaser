@@ -77,11 +77,15 @@ class Container
 			throw new Exception\NamespaceNotFoundException("Namespace '$namespace' not found in '$file'.");
 		}
 
-		if (!isset(self::$map[$file][$namespace][$alias])) {
+		$parts = explode('\\', $alias);
+		$first = array_shift($parts);
+
+		if (!isset(self::$map[$file][$namespace][$first])) {
 			return ltrim(trim($namespace, '\\') . '\\', '\\') . $alias;
 		}
 
-		return self::$map[$file][$namespace][$alias];
+		$appendix = implode('\\', $parts);
+		return self::$map[$file][$namespace][$first] . (strlen($appendix) ? '\\' . $appendix : '');
 	}
 
 

@@ -3,6 +3,7 @@
 use \A\B\C;
 use D as E;
 use F\Z , G\H, I\J\K as L;
+use Easy\Peasy;
 
 
 
@@ -14,6 +15,7 @@ use F\Z , G\H, I\J\K as L;
  * F -> F
  * H -> G\H
  * L -> I\J\K
+ * Peasy\Leasy\Feazy -> Easy\Peasy\Leasy\Feazy
  * other: <class_name>
  */
 

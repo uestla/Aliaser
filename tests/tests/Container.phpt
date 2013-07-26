@@ -7,6 +7,8 @@ require_once __DIR__ . '/../bootstrap.php';
 
 
 
+// === SIMPLE
+
 $ref = new ReflectionClass('X');
 
 Assert::equal('A\B\C', Aliaser::getClass('C', $ref));
@@ -15,9 +17,14 @@ Assert::equal('F\Z', Aliaser::getClass('Z', $ref));
 Assert::equal('G\H', Aliaser::getClass('H', $ref));
 Assert::equal('I\J\K', Aliaser::getClass('L', $ref));
 Assert::equal('X', Aliaser::getClass('X', $ref));
+Assert::equal('Easy\Peasy\Leasy', Aliaser::getClass('Peasy\Leasy', $ref));
+Assert::equal('Easy\Peasy\Leasy\Feazy', Aliaser::getClass('Peasy\Leasy\Feazy', $ref));
+Assert::equal('Easy\Peasy', Aliaser::getClass('Peasy', $ref));
 Assert::equal('OtherClasses', Aliaser::getClass('OtherClasses', $ref));
 
 
+
+// === SINGLE NAMESPACE
 
 $ref = new ReflectionClass('Foo\Bar');
 
@@ -30,6 +37,8 @@ Assert::equal('Foo\Bar', Aliaser::getClass('Bar', $ref));
 Assert::equal('Foo\OtherClasses', Aliaser::getClass('OtherClasses', $ref));
 
 
+
+// === MULTIPLE NAMESPACES
 
 $ref = new ReflectionClass('Foo');
 
@@ -55,6 +64,8 @@ Assert::equal('Foo\OtherClasses', Aliaser::getClass('OtherClasses', $ref));
 
 
 
+// === ABSOLUTE "PATHS"
+
 $ref = new ReflectionClass('Model\Entities\TypesEntity');
 
 Assert::equal('object', Aliaser::getClass('\object', $ref));
@@ -65,6 +76,8 @@ Assert::equal('callback', Aliaser::getClass('\callback', $ref));
 Assert::equal('void', Aliaser::getClass('\void', $ref));
 
 
+
+// === TRAITS
 
 $ref = new ReflectionClass('Wee');
 

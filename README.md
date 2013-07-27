@@ -36,7 +36,7 @@ Aliaser\Container::getClass('DateTime', $reflection); // 'DateTime'
 
 It handles multiple namespace definitions in a single file as well.
 
-However, parsing can be quite expensive - we can use a [Nette Framework](http://nette.org) Cache:
+However, parsing can be quite expensive - we can use a [Nette Framework](http://doc.nette.org/en/caching) Cache:
 
 ```php
 $storage = new Nette\Caching\Storages\FileStorage(__DIR__ . '/temp');

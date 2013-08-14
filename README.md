@@ -1,7 +1,7 @@
 Aliaser
 =======
 
-Simple PHP library for parsing and handling class aliases defined by `USE` statements.
+Simple PHP library for parsing and handling class and function aliases defined by `USE` statements.
 
 Usage
 -----
@@ -21,6 +21,9 @@ use \DateTime;
  */
 class Book
 {}
+
+function foo()
+{}
 ```
 
 **foo.php**
@@ -32,6 +35,15 @@ $reflection = new ReflectionClass('Model\Entities\Book');
 
 Aliaser\Container::getClass('User', $reflection); // 'Model\Entities\User'
 Aliaser\Container::getClass('DateTime', $reflection); // 'DateTime'
+```
+
+We can discover full function/callback name according to given namespace context as well.
+
+```php
+Aliaser\Container::getCallback('DateTime::format', $reflection); // 'DateTime::format'
+Aliaser\Container::getCallback('User::getName', $reflection); // 'Model\Entities\User::getName'
+
+Aliaser\Container::getCallback('foo', $reflection); // 'Model\Entities\foo'
 ```
 
 It handles multiple namespace definitions in a single file as well.

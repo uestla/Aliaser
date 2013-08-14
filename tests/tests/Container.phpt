@@ -4,6 +4,7 @@ use Tester\Assert;
 use Aliaser\Container as Aliaser;
 
 require_once __DIR__ . '/../bootstrap.php';
+require_once __DIR__ . '/definitions/globals.php';
 
 
 
@@ -88,3 +89,21 @@ Assert::equal('G\H', Aliaser::getClass('H', $ref));
 Assert::equal('I\J\K', Aliaser::getClass('L', $ref));
 Assert::equal('Wee', Aliaser::getClass('Wee', $ref));
 Assert::equal('OtherClasses', Aliaser::getClass('OtherClasses', $ref));
+
+
+
+// === CALLBACKS
+
+$ref = new ReflectionClass('A\B\C');
+
+Assert::equal('globalFunction', Aliaser::getCallback('\globalFunction', $ref));
+Assert::equal('globalFunction', Aliaser::getCallback('globalFunction', $ref));
+
+Assert::equal('helloWorld', Aliaser::getCallback('\helloWorld', $ref));
+Assert::equal('A\B\helloWorld', Aliaser::getCallback('helloWorld', $ref));
+
+Assert::equal('D\specialFunction', Aliaser::getCallback('D\specialFunction', $ref));
+Assert::equal('E\F\G\anotherFunction', Aliaser::getCallback('G\anotherFunction', $ref));
+
+Assert::equal('D::method', Aliaser::getCallback('D::method', $ref));
+Assert::equal('E\F\G::method', Aliaser::getCallback('G::method', $ref));

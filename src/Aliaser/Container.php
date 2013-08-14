@@ -47,7 +47,7 @@ class Container
 			return $alias;
 		}
 
-		if (substr($alias, 0, 1) === '\\') {
+		if (strncmp($alias, '\\', 1) === 0) {
 			return substr($alias, 1);
 		}
 
@@ -86,6 +86,47 @@ class Container
 
 		$appendix = implode('\\', $parts);
 		return self::$map[$file][$namespace][$first] . (strlen($appendix) ? '\\' . $appendix : '');
+	}
+
+
+
+	/**
+	 * @param  string $callback
+	 * @param  \ReflectionClass $context
+	 * @return string
+	 */
+	static function getCallback($callback, \ReflectionClass $context)
+	{
+		if (!strlen($callback)) {
+			return $callback;
+		}
+
+		if (strncmp($callback, '\\', 1) === 0) {
+			return substr($callback, 1);
+		}
+
+		if (($a = strpos($callback, '::')) !== FALSE) { // Class::method
+			return self::getClass(substr($callback, 0, $a), $context) . '::' . substr($callback, $a + 2);
+		}
+
+		$candidates = array();
+
+		if (($b = strpos($callback, '\\')) !== FALSE) {
+			$candidates[] = self::getClass(substr($callback, 0, $b), $context) . '\\' . substr($callback, $b + 1);
+
+		} else {
+			// namespaced name first, then global space
+			$candidates[] = $context->getNamespaceName() . '\\' . $callback;
+			$candidates[] = $callback;
+		}
+
+		foreach ($candidates as $function) {
+			if (function_exists($function)) {
+				return $function;
+			}
+		}
+
+		throw new Exception\FunctionNotFoundException("Function '$callback' not found in file '{$context->getFileName()}'.");
 	}
 
 

@@ -40,6 +40,7 @@ class Container
 	 * @param  string $alias
 	 * @param  \ReflectionClass $context
 	 * @return string
+	 * @throws Exception\NamespaceNotFoundException
 	 */
 	static function getClass($alias, \ReflectionClass $context)
 	{
@@ -94,6 +95,7 @@ class Container
 	 * @param  string $callback
 	 * @param  \ReflectionClass $context
 	 * @return string
+	 * @throws Exception\FunctionNotFoundException
 	 */
 	static function getCallback($callback, \ReflectionClass $context)
 	{

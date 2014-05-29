@@ -27,13 +27,11 @@ class Container
 	const C_FILE = 'file-';
 
 
-
 	/** @throws Exception\StaticClassException */
 	final function __construct()
 	{
 		throw new Exception\StaticClassException;
 	}
-
 
 
 	/**
@@ -90,7 +88,6 @@ class Container
 	}
 
 
-
 	/**
 	 * @param  string $callback
 	 * @param  \ReflectionClass $context
@@ -132,7 +129,6 @@ class Container
 	}
 
 
-
 	/**
 	 * @param  NIStorage $storage
 	 * @return void
@@ -141,7 +137,6 @@ class Container
 	{
 		self::$cache = new NCache($storage, __CLASS__);
 	}
-
 
 
 	/** @return NIStorage */

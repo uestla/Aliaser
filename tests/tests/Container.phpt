@@ -7,7 +7,6 @@ require_once __DIR__ . '/../bootstrap.php';
 require_once __DIR__ . '/definitions/globals.php';
 
 
-
 // === SIMPLE
 
 $ref = new ReflectionClass('X');
@@ -24,7 +23,6 @@ Assert::equal('Easy\Peasy', Aliaser::getClass('Peasy', $ref));
 Assert::equal('OtherClasses', Aliaser::getClass('OtherClasses', $ref));
 
 
-
 // === SINGLE NAMESPACE
 
 $ref = new ReflectionClass('Foo\Bar');
@@ -36,7 +34,6 @@ Assert::equal('G\H', Aliaser::getClass('H', $ref));
 Assert::equal('I\J\K', Aliaser::getClass('L', $ref));
 Assert::equal('Foo\Bar', Aliaser::getClass('Bar', $ref));
 Assert::equal('Foo\OtherClasses', Aliaser::getClass('OtherClasses', $ref));
-
 
 
 // === MULTIPLE NAMESPACES
@@ -52,7 +49,6 @@ Assert::equal('Foo', Aliaser::getClass('Foo', $ref));
 Assert::equal('OtherClasses', Aliaser::getClass('OtherClasses', $ref));
 
 
-
 $ref = new ReflectionClass('Foo\Foo');
 
 Assert::equal('A\B\C', Aliaser::getClass('C', $ref));
@@ -62,7 +58,6 @@ Assert::equal('G\H', Aliaser::getClass('H', $ref));
 Assert::equal('I\J\K', Aliaser::getClass('L', $ref));
 Assert::equal('Foo\Foo', Aliaser::getClass('Foo', $ref));
 Assert::equal('Foo\OtherClasses', Aliaser::getClass('OtherClasses', $ref));
-
 
 
 // === ABSOLUTE "PATHS"
@@ -77,7 +72,6 @@ Assert::equal('callback', Aliaser::getClass('\callback', $ref));
 Assert::equal('void', Aliaser::getClass('\void', $ref));
 
 
-
 // === TRAITS
 
 $ref = new ReflectionClass('Wee');
@@ -89,7 +83,6 @@ Assert::equal('G\H', Aliaser::getClass('H', $ref));
 Assert::equal('I\J\K', Aliaser::getClass('L', $ref));
 Assert::equal('Wee', Aliaser::getClass('Wee', $ref));
 Assert::equal('OtherClasses', Aliaser::getClass('OtherClasses', $ref));
-
 
 
 // === CALLBACKS

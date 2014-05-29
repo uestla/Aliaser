@@ -8,7 +8,6 @@ class SL
 	private static $services = array();
 
 
-
 	/** @return Nette\Caching\Storages\FileStorage */
 	static function cacheStorage()
 	{
@@ -16,7 +15,6 @@ class SL
 			return new Nette\Caching\Storages\FileStorage(__DIR__ . '/temp');
 		});
 	}
-
 
 
 	/**

@@ -20,13 +20,11 @@ class Parser
 	const S_IN_USE_AS = 4;
 
 
-
 	/** @throws Exception\StaticClassException */
 	final function __construct()
 	{
 		throw new Exception\StaticClassException;
 	}
-
 
 
 	/**
